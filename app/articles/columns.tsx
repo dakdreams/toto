@@ -60,9 +60,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "prix1",
-    header: () => (
-      <div className="text-center text-red-600">Prix de revient</div>
-    ),
+    header: () => <div className="text-center text-red-600">revient</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("prix1"));
 
@@ -76,9 +74,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "prix2",
-    header: () => (
-      <div className="text-center text-green-600">Prix grossite</div>
-    ),
+    header: () => <div className="text-center text-green-600">grossite</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("prix2"));
 

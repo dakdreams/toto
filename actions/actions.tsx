@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/db";
-import { Articles } from "@prisma/client";
+import { Articles, Credits } from "@prisma/client";
 
 import { revalidatePath } from "next/cache";
 
@@ -16,4 +16,16 @@ export async function createArticles(FormData: Articles) {
     },
   });
   revalidatePath("/articles");
+}
+
+export async function createCredits(FormData: Credits) {
+  await prisma.credits.create({
+    data: {
+      amount: FormData.amount,
+      nom: FormData.nom,
+      status: FormData.status,
+      date: FormData.date,
+    },
+  });
+  revalidatePath("/credits");
 }

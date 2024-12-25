@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 export default function Home() {
   return (
-    <Card className="my-8 mx-8">
+    <Card className="my-2 mx-2">
       <CardHeader>
         <CardTitle>EDAF</CardTitle>
         <CardDescription>Etablisement Drabo Aly et Frere</CardDescription>
@@ -38,13 +38,20 @@ export default function Home() {
 
           <Link href={`credits`}>
             <Button className="bg-red-500 hover:bg-red-700 text-white font-bold w-80 rounded-full my-8">
-              reste des credits
+              credits
+            </Button>
+          </Link>
+          <br />
+
+          <Link href={`credits`}>
+            <Button className="bg-slate-500 hover:bg-slate-700 text-white font-bold w-80 rounded-full my-8">
+              debiteur
             </Button>
           </Link>
         </div>
       </CardContent>
       <CardFooter>
-        <p>Adjame</p>
+        <p>Adjame Inspection Du Travail</p>
       </CardFooter>
     </Card>
   );

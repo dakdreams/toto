@@ -15,3 +15,11 @@ model Articles {
   prix2   Int
   prix3   Int
 }
+
+model Credits {
+  id     Int    @id @default(autoincrement())
+  amount Int
+  nom    String
+  date   String
+  status String @default("c")
+}

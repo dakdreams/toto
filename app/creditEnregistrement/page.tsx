@@ -23,19 +23,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createArticles } from "@/actions/actions";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { createCredits } from "@/actions/actions";
 
 const formSchema = z.object({
   id: z.coerce.number(),
-  article: z.string().min(2, {
+  nom: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  marque: z.string().min(2, {
+  status: z.string(),
+  date: z.string().min(2, {
     message: "marque must be at least 2 characters.",
   }),
-  prix1: z.coerce.number(),
-  prix2: z.coerce.number(),
-  prix3: z.coerce.number(),
+  amount: z.coerce.number(),
 });
 
 export default function ProfileForm() {
@@ -44,11 +50,10 @@ export default function ProfileForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       id: 0,
-      article: "",
-      marque: "",
-      prix1: 0,
-      prix2: 0,
-      prix3: 0,
+      nom: "",
+      status: "",
+      date: "",
+      amount: 0,
     },
   });
 
@@ -56,8 +61,11 @@ export default function ProfileForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    createCredits(values);
 
-    createArticles(values);
+    console.log(values);
+
+    // createCredits(values);
   }
 
   return (
@@ -65,17 +73,17 @@ export default function ProfileForm() {
       <Card className="w-[350px]">
         <CardHeader>
           <CardTitle>EDAF</CardTitle>
-          <CardDescription>Ajouter des articles.</CardDescription>
+          <CardDescription>ejouter credit ou versement.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
                 control={form.control}
-                name="article"
+                name="nom"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>article</FormLabel>
+                    <FormLabel>Nom du client</FormLabel>
                     <FormControl>
                       <Input placeholder="" {...field} />
                     </FormControl>
@@ -83,60 +91,62 @@ export default function ProfileForm() {
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
-                name="marque"
+                name="status"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Marque</FormLabel>
+                    <FormLabel>actions</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="versement ou credit" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="c">credit</SelectItem>
+                        <SelectItem value="v">versement</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      selection l action a effectuer{" "}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="amount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>sommes</FormLabel>
+                    <FormControl>
+                      <Input type="number" placeholder="" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>date</FormLabel>
                     <FormControl>
                       <Input placeholder="" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="prix1"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>prix de revient</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="prix2"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>grossiste</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="prix3"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Demi-gros</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <Button className="w-full" type="submit">
-                Submit
+                Valider
               </Button>
             </form>
           </Form>
